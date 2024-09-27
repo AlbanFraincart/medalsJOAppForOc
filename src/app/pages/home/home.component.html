@@ -1,15 +1,34 @@
-<h2>Olympic games app</h2>
+<h2 class="test">Olympic Games App</h2>
 <hr />
-<div *ngIf="olympics$ | async as olympics; else loading">
-  <p>{{ olympics?.length }} events loaded</p>
-  <ul>
-    <li *ngFor="let country of olympics">
-      {{ country.country }} has participated in
-      {{ country.participations.length }} events.
-    </li>
-  </ul>
+
+<div *ngIf="chartData?.length; else loading">
+  <div class="totals">
+    <div class="total-item">
+      <h3>Total Countries</h3>
+      <p>{{ totalCountries }}</p>
+    </div>
+    <div class="total-item">
+      <h3>Total Medals</h3>
+      <p>{{ totalMedals }}</p>
+    </div>
+  </div>
+  <div class="chart-container">
+    <ngx-charts-pie-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="chartData"
+      [gradient]="false"
+      [legend]="true"
+      [labels]="true"
+      [doughnut]="false"
+      [explodeSlices]="false"
+      [animations]="true"
+      (select)="onSelect($event)"
+    >
+    </ngx-charts-pie-chart>
+  </div>
 </div>
+
 <ng-template #loading>
   <p>Loading data...</p>
 </ng-template>
-<p *ngIf="!(olympics$ | async)">No data loaded.</p>
