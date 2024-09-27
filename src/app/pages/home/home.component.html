@@ -1,3 +1,15 @@
 <h2>Olympic games app</h2>
 <hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div *ngIf="olympics$ | async as olympics; else loading">
+  <p>{{ olympics?.length }} events loaded</p>
+  <ul>
+    <li *ngFor="let country of olympics">
+      {{ country.country }} has participated in
+      {{ country.participations.length }} events.
+    </li>
+  </ul>
+</div>
+<ng-template #loading>
+  <p>Loading data...</p>
+</ng-template>
+<p *ngIf="!(olympics$ | async)">No data loaded.</p>
