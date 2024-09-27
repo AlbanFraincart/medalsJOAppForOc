@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   public totalCountries: number = 0;
   public totalMedals: number = 0;
+  private allData: OlympicCountry[] = [];
 
 
   constructor(private olympicService: OlympicService, private router: Router) { }
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.olympics$ = this.olympicService.getOlympics();
     this.olympics$.subscribe((olympics) => {
       if (olympics) {
+        this.allData = olympics;
         this.prepareChartData(olympics);
         this.calculateTotals(olympics);
       }
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   prepareChartData(olympics: OlympicCountry[]): void {
     this.chartData = olympics.map((country) => {
+      console.log('country', country);
       const totalMedals = country.participations.reduce(
         (sum, participation) => sum + participation.medalsCount,
         0
@@ -51,9 +54,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onSelect(data: any): void {
-    const country = this.chartData.find((item) => item.name === data.name);
+    const country = this.allData.find((country) => country.country === data.name);
     if (country) {
-      this.router.navigate(['/country', country.id]);
+      this.router.navigate(['/country', country.id], { state: { countryData: country } });
     }
   }
 
