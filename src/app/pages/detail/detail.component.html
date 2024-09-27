@@ -1,1 +1,42 @@
-<p>detail works!</p>
+<div *ngIf="countryData; else noData">
+  <button (click)="goBack()">Retour</button>
+  <h2>{{ countryData.country }} - Nombre de Médailles par Année</h2>
+
+  <div class="totals">
+    <div class="total-item">
+      <h3>Total d'entrées :</h3>
+      <p>{{ totalEntries }}</p>
+    </div>
+    <div class="total-item">
+      <h3>Total de médailles cumulées :</h3>
+      <p>{{ totalMedals }}</p>
+    </div>
+    <div class="total-item">
+      <h3>Total d'athlètes cumulés :</h3>
+      <p>{{ totalAthletes }}</p>
+    </div>
+  </div>
+  <div class="chart-container">
+    <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="lineChartData"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [autoScale]="autoScale"
+      [yScaleMin]="yScaleMin"
+      [yScaleMax]="yScaleMax"
+    >
+    </ngx-charts-line-chart>
+  </div>
+</div>
+
+<ng-template #noData>
+  <p>Aucune donnée de pays disponible.</p>
+</ng-template>

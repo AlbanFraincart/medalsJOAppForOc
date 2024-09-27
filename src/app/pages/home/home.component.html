@@ -4,11 +4,11 @@
 <div *ngIf="chartData?.length; else loading">
   <div class="totals">
     <div class="total-item">
-      <h3>Total Countries</h3>
+      <h3>Total Pays</h3>
       <p>{{ totalCountries }}</p>
     </div>
     <div class="total-item">
-      <h3>Total Medals</h3>
+      <h3>Total Médailles</h3>
       <p>{{ totalMedals }}</p>
     </div>
   </div>
@@ -30,5 +30,5 @@
 </div>
 
 <ng-template #loading>
-  <p>Loading data...</p>
+  <p>Chargement des données...</p>
 </ng-template>
