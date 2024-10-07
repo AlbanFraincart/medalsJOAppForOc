@@ -33,6 +33,9 @@
 }
 
 .total-item {
+  flex: 1 1 200px;
+  max-width: 300px;
+  min-width: 150px;
   border: 2px solid #04838f;
   border-radius: 8px;
   padding: 5px 15px;
@@ -74,6 +77,11 @@
   .title {
     font-size: 18px;
     padding: 4px 8px;
+  }
+
+  .total-item {
+    min-width: 100px;
+    padding: 0 5px;
   }
 
   .chart-container {
