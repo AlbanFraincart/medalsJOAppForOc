@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   public totalCountries: number = 0;
   public totalMedals: number = 0;
+  public totalOlympics: number = 0;
   private allData: OlympicCountry[] = [];
 
-
-  constructor(private olympicService: OlympicService, private router: Router) { }
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 
   prepareChartData(olympics: OlympicCountry[]): void {
     this.chartData = olympics.map((country) => {
@@ -54,20 +53,32 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onSelect(data: any): void {
-    const country = this.allData.find((country) => country.country === data.name);
+    const country = this.allData.find(
+      (country) => country.country === data.name
+    );
     if (country) {
-      this.router.navigate(['/country', country.id], { state: { countryData: country } });
+      this.router.navigate(['/country', country.id], {
+        state: { countryData: country },
+      });
     }
   }
 
   calculateTotals(olympics: OlympicCountry[]): void {
     this.totalCountries = olympics.length;
     this.totalMedals = olympics.reduce((sum, country) => {
-      return sum + country.participations.reduce(
-        (countrySum, participation) => countrySum + participation.medalsCount,
-        0
+      return (
+        sum +
+        country.participations.reduce(
+          (countrySum, participation) => countrySum + participation.medalsCount,
+          0
+        )
       );
     }, 0);
-  }
 
+    this.totalOlympics = olympics.reduce((sum, country) => {
+      console.log('country', country);
+      console.log('sum', sum);
+      return sum + country.participations.length;
+    }, 0);
+  }
 }
