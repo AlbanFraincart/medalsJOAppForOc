@@ -1,6 +1,28 @@
 .totals-container {
-  align-items: center;
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+
+  color: #ffffff;
+  padding: 10px 20px;
+  background-color: #04838f;
+  border-radius: 10px;
+  border: 2px solid #04838f;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.totals-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .totals {
@@ -11,11 +33,11 @@
 }
 
 .total-item {
-  border: 2px solid #1e90ff;
+  border: 2px solid #04838f;
   border-radius: 8px;
   padding: 5px 15px;
   text-align: center;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .chart-container {

@@ -2,16 +2,23 @@
 <hr />
 
 <div *ngIf="chartData?.length; else loading">
-  <div class="totals">
-    <div class="total-item">
-      <h3>Total Pays</h3>
-      <p>{{ totalCountries }}</p>
+  <div class="totals-wrapper">
+    <div class="totals-container">
+      <h1 class="title">Médailles par pays</h1>
     </div>
-    <div class="total-item">
-      <h3>Total Médailles</h3>
-      <p>{{ totalMedals }}</p>
+
+    <div class="totals">
+      <div class="total-item">
+        <h3>Total de JO</h3>
+        <p>{{ totalOlympics }}</p>
+      </div>
+      <div class="total-item">
+        <h3>Total Pays</h3>
+        <p>{{ totalCountries }}</p>
+      </div>
     </div>
   </div>
+
   <div class="chart-container">
     <ngx-charts-pie-chart
       [view]="view"

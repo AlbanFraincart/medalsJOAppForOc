@@ -1,6 +1,8 @@
 <div *ngIf="countryData; else noData">
-  <button (click)="goBack()">Retour</button>
-  <h2>{{ countryData.country }} - Nombre de Médailles par Année</h2>
+  <div class="header">
+    <button (click)="goBack()" class="back-button">← Retour</button>
+    <h2 class="country-title">{{ countryData.country }}</h2>
+  </div>
 
   <div class="totals">
     <div class="total-item">

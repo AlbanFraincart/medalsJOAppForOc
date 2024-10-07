@@ -11,7 +11,7 @@
 }
 
 .total-item {
-  border: 2px solid #1e90ff;
+  border: 2px solid #04838f;
   border-radius: 8px;
   padding: 5px 15px;
   text-align: center;
@@ -22,4 +22,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  background-color: #04838f;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.country-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 10px 20px;
+  background-color: #04838f;
+  border-radius: 10px;
+  border: 2px solid #04838f;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 10px;
+  position: relative;
 }
