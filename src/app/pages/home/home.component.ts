@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
@@ -29,17 +29,43 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.allData = olympics;
         this.prepareChartData(olympics);
         this.calculateTotals(olympics);
+        this.setChartView();
       }
     });
+    this.setChartView();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    console.log('event', event);
+    this.setChartView();
+  }
+
+  setChartView(): void {
+    const width = window.innerWidth;
+    let chartWidth = 700;
+    let chartHeight = 400;
+
+    if (width <= 480) {
+      chartWidth = 320;
+      chartHeight = 350;
+    } else if (width <= 720) {
+      chartWidth = 500;
+      chartHeight = 350;
+    } else {
+      chartWidth = 700;
+      chartHeight = 400;
+    }
+
+    this.view = [chartWidth, chartHeight];
+  }
+
   prepareChartData(olympics: OlympicCountry[]): void {
     this.chartData = olympics.map((country) => {
-      console.log('country', country);
       const totalMedals = country.participations.reduce(
         (sum, participation) => sum + participation.medalsCount,
         0
@@ -76,8 +102,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 0);
 
     this.totalOlympics = olympics.reduce((sum, country) => {
-      console.log('country', country);
-      console.log('sum', sum);
       return sum + country.participations.length;
     }, 0);
   }
