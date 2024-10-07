@@ -3,7 +3,7 @@
 
 <div *ngIf="errorMessage; else content">
   <p class="error">{{ errorMessage }}</p>
-  <button (click)="loadData()">Réessayer</button>
+  <button class="error-button" (click)="loadData()">Réessayer</button>
 </div>
 
 <ng-template #content>
