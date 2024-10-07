@@ -11,6 +11,16 @@ export class AppComponent implements OnInit {
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    this.olympicService.loadInitialData().pipe(take(1)).subscribe();
+    this.olympicService
+      .loadInitialData()
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          console.log('Données chargées:', data);
+        },
+        error: (err) => {
+          console.error('Erreur:', err.message);
+        },
+      });
   }
 }

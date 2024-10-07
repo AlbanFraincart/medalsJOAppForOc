@@ -1,41 +1,54 @@
 <h2 class="test">Olympic Games App</h2>
 <hr />
 
-<div *ngIf="chartData?.length; else loading">
-  <div class="totals-wrapper">
-    <div class="totals-container">
-      <h1 class="title">Médailles par pays</h1>
-    </div>
-
-    <div class="totals">
-      <div class="total-item">
-        <h3>Total de JO</h3>
-        <p>{{ totalOlympics }}</p>
-      </div>
-      <div class="total-item">
-        <h3>Total Pays</h3>
-        <p>{{ totalCountries }}</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="chart-container">
-    <ngx-charts-pie-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="chartData"
-      [gradient]="false"
-      [legend]="false"
-      [labels]="true"
-      [doughnut]="false"
-      [explodeSlices]="false"
-      [animations]="true"
-      (select)="onSelect($event)"
-    >
-    </ngx-charts-pie-chart>
-  </div>
+<div *ngIf="errorMessage; else content">
+  <p class="error">{{ errorMessage }}</p>
+  <button (click)="loadData()">Réessayer</button>
 </div>
 
-<ng-template #loading>
-  <p>Chargement des données...</p>
+<ng-template #content>
+  <ng-container *ngIf="isLoading; else loaded">
+    <p>Chargement des données...</p>
+  </ng-container>
+
+  <ng-template #loaded>
+    <div *ngIf="chartData.length > 0; else noData">
+      <div class="totals-wrapper">
+        <div class="totals-container">
+          <h1 class="title">Médailles par pays</h1>
+        </div>
+
+        <div class="totals">
+          <div class="total-item">
+            <h3>Total de JO</h3>
+            <p>{{ totalOlympics }}</p>
+          </div>
+          <div class="total-item">
+            <h3>Total Pays</h3>
+            <p>{{ totalCountries }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <ngx-charts-pie-chart
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="chartData"
+          [gradient]="false"
+          [legend]="false"
+          [labels]="true"
+          [doughnut]="false"
+          [explodeSlices]="false"
+          [animations]="true"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <p>Aucune donnée disponible.</p>
+    </ng-template>
+  </ng-template>
 </ng-template>

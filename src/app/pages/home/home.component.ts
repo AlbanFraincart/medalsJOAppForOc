@@ -1,6 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -10,7 +10,6 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public olympics$: Observable<OlympicCountry[] | null> | undefined;
   public chartData: any[] = [];
   public view: [number, number] = [700, 400];
   public colorScheme = 'cool';
@@ -20,19 +19,43 @@ export class HomeComponent implements OnInit, OnDestroy {
   public totalOlympics: number = 0;
   private allData: OlympicCountry[] = [];
 
+  public isLoading = true;
+
+  public errorMessage: string | null = null;
+
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe((olympics) => {
-      if (olympics) {
-        this.allData = olympics;
-        this.prepareChartData(olympics);
-        this.calculateTotals(olympics);
-        this.setChartView();
-      }
-    });
-    this.setChartView();
+    this.loadData();
+  }
+
+  loadData(): void {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.subscription.add(
+      this.olympicService
+        .loadInitialData()
+        .pipe(take(1))
+        .subscribe({
+          next: (olympics) => {
+            this.isLoading = false;
+            if (olympics && olympics.length > 0) {
+              this.allData = olympics;
+              this.prepareChartData(olympics);
+              this.calculateTotals(olympics);
+              this.setChartView();
+            } else {
+              this.errorMessage = 'Aucune donnée disponible.';
+            }
+          },
+          error: (err) => {
+            this.isLoading = false;
+            this.errorMessage =
+              err.message || 'Une erreur est survenue. Veuillez réessayer.';
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {
