@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -28,8 +28,12 @@ export class DetailComponent implements OnInit {
   yScaleMin = 0;
   yScaleMax = 200;
 
+  constructor(private router: Router) {}
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.setChartView();
+  }
 
   ngOnInit(): void {
     const state = history.state as { countryData: OlympicCountry };
@@ -38,9 +42,9 @@ export class DetailComponent implements OnInit {
       this.countryData = state.countryData;
       this.prepareLineChartData();
       this.calculateTotals();
-
+      this.setChartView();
     } else {
-      // Si les données ne sont pas disponibles 
+      // Si les données ne sont pas disponibles
       // const countryId = +this.route.snapshot.paramMap.get('id')!;
       // voir pour mettre service en secours
       // this.olympicService.getCountryById(countryId).subscribe(country => {
@@ -52,6 +56,25 @@ export class DetailComponent implements OnInit {
       console.log('Aucune donnée de pays disponible');
       this.router.navigate(['/']);
     }
+  }
+
+  setChartView(): void {
+    const width = window.innerWidth;
+    let chartWidth = 700;
+    let chartHeight = 400;
+
+    if (width <= 480) {
+      chartWidth = 320;
+      chartHeight = 350;
+    } else if (width <= 720) {
+      chartWidth = 500;
+      chartHeight = 350;
+    } else {
+      chartWidth = 700;
+      chartHeight = 400;
+    }
+
+    this.view = [chartWidth, chartHeight];
   }
 
   prepareLineChartData(): void {

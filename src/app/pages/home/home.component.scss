@@ -44,4 +44,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 22px;
+    padding: 8px 16px;
+  }
+
+  .chart-container {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px;
+    padding: 6px 12px;
+  }
+
+  .chart-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 18px;
+    padding: 4px 8px;
+  }
+
+  .chart-container {
+    padding: 10px;
+  }
+
+  .totals {
+    flex-wrap: wrap;
+  }
 }
