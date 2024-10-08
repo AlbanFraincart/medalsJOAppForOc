@@ -8,12 +8,22 @@ import { OlympicService } from './core/services/olympic.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  public isOnline: boolean = navigator.onLine; // Track online status
+
   // Inject the OlympicService to handle data loading
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    // Use the OlympicService to fetch data when the component initializes
+    // Initial status check
+    this.isOnline = navigator.onLine;
 
+    // Listen to online event
+    window.addEventListener('online', this.updateOnlineStatus.bind(this));
+
+    // Listen to offline event
+    window.addEventListener('offline', this.updateOnlineStatus.bind(this));
+
+    // Use the OlympicService to fetch data when the component initializes
     this.olympicService
       .loadInitialData()
       .pipe(take(1)) // Take only the first emission and automatically complete the observable
@@ -27,5 +37,10 @@ export class AppComponent implements OnInit {
           console.error('Erreur:', err.message);
         },
       });
+  }
+
+  updateOnlineStatus(): void {
+    console.log('eeee');
+    this.isOnline = navigator.onLine;
   }
 }
