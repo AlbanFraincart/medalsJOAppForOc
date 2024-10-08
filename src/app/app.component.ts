@@ -8,16 +8,21 @@ import { OlympicService } from './core/services/olympic.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  // Inject the OlympicService to handle data loading
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
+    // Use the OlympicService to fetch data when the component initializes
+
     this.olympicService
       .loadInitialData()
-      .pipe(take(1))
+      .pipe(take(1)) // Take only the first emission and automatically complete the observable
       .subscribe({
+        // Callback executed when data is successfully loaded
         next: (data) => {
           console.log('Données chargées:', data);
         },
+        // Callback executed if an error occurs while fetching data
         error: (err) => {
           console.error('Erreur:', err.message);
         },

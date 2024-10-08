@@ -1,3 +1,4 @@
+<!-- If countryData is available, display the details. Otherwise, show a message that no data is available -->
 <div *ngIf="countryData; else noData">
   <div class="header">
     <button (click)="goBack()" class="back-button">← Retour</button>
@@ -19,6 +20,7 @@
     </div>
   </div>
   <div class="chart-container">
+    <!-- Line chart component from ngx-charts library -->
     <ngx-charts-line-chart
       [view]="view"
       [scheme]="colorScheme"
@@ -39,6 +41,7 @@
   </div>
 </div>
 
+<!-- Template to show if no countryData is available -->
 <ng-template #noData>
   <p>Aucune donnée de pays disponible.</p>
 </ng-template>

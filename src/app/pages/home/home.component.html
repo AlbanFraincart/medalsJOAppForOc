@@ -1,23 +1,29 @@
 <h2 class="test">Olympic Games App</h2>
 <hr />
 
+<!-- If there is an error message, display the error block. Otherwise, show the main content. -->
 <div *ngIf="errorMessage; else content">
   <p class="error">{{ errorMessage }}</p>
   <button class="error-button" (click)="loadData()">Réessayer</button>
 </div>
 
+<!-- Template for the main content, displayed if no error is present -->
 <ng-template #content>
   <ng-container *ngIf="isLoading; else loaded">
     <p>Chargement des données...</p>
   </ng-container>
 
+  <!-- Template for loaded content, executed once the data has been successfully loaded -->
   <ng-template #loaded>
+    <!-- If chart data is available, display the chart and statistics. Otherwise, show a "no data" message -->
     <div *ngIf="chartData.length > 0; else noData">
+      <!-- Wrapper for displaying total statistics (total Olympics and total countries) -->
       <div class="totals-wrapper">
         <div class="totals-container">
           <h1 class="title">Médailles par pays</h1>
         </div>
 
+        <!-- Total statistics -->
         <div class="totals">
           <div class="total-item">
             <h3>Total de JO</h3>
@@ -31,6 +37,7 @@
       </div>
 
       <div class="chart-container">
+        <!-- ngx-charts pie chart component displaying country medals -->
         <ngx-charts-pie-chart
           [view]="view"
           [scheme]="colorScheme"
@@ -47,6 +54,7 @@
       </div>
     </div>
 
+    <!-- If no chart data is available, display a "no data" message -->
     <ng-template #noData>
       <p>Aucune donnée disponible.</p>
     </ng-template>
