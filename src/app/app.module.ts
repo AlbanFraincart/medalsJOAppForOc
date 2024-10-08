@@ -11,6 +11,7 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { OfflineComponent } from './pages/offline/offline.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {
     HomeComponent,
     NotFoundComponent,
     DetailComponent,
+    OfflineComponent,
   ],
   imports: [
     BrowserModule,
