@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { graphicBarData } from 'src/app/core/models/graphic';
 
 @Component({
   selector: 'app-detail',
@@ -13,7 +14,7 @@ export class DetailComponent implements OnInit {
   countryData: OlympicCountry | null = null;
 
   // Data to be displayed on the line chart
-  lineChartData: any[] = [];
+  lineChartData: graphicBarData[] = [];
 
   // Total number of entries, medals, and athletes for the country
   totalEntries: number = 0;
