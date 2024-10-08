@@ -40,7 +40,6 @@ export class AppComponent implements OnInit {
   }
 
   updateOnlineStatus(): void {
-    console.log('eeee');
     this.isOnline = navigator.onLine;
   }
 }

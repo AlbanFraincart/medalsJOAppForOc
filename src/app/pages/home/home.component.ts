@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
+import { graphicPieData } from 'src/app/core/models/graphic';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -11,7 +12,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   // Chart data to be displayed
-  public chartData: any[] = [];
+  public chartData: graphicPieData[] = [];
 
   // Chart dimensions (width, height)
   public view: [number, number] = [700, 400];
