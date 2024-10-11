@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Error message to display in case of an error
   public errorMessage: string | null = null;
 
-  constructor(private olympicService: OlympicService, private router: Router) {}
+  constructor(private olympicService: OlympicService, private router: Router) { }
 
   ngOnInit(): void {
     // Check if an error message was passed through the router's state
@@ -82,8 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    console.log('event', event);
+  onResize() {
     this.setChartView();
   }
 
