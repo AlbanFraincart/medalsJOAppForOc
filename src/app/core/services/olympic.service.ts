@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { OlympicCountry } from '../models/Olympic';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class OlympicService {
   // Cache for the Olympic data, shared across multiple subscribers
   private olympicsCache$: Observable<OlympicCountry[]> | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    Loads the initial Olympic data.
@@ -28,14 +28,10 @@ export class OlympicService {
 
     // Fetch the data from the API and cache it using shareReplay
     this.olympicsCache$ = this.http.get<OlympicCountry[]>(this.olympicUrl).pipe(
-      tap((data) => {
-        console.log("Données chargées depuis l'API:", data);
-      }),
-      // Caches the latest value and shares it with future subscribers
-      shareReplay(1),
-      // Handles any errors that occur
-      catchError((error) => this.handleError(error))
+      shareReplay(1),       // Caches the latest value and shares it with future subscribers
+      catchError((error) => this.handleError(error))       // Handles any errors that occur
     );
+
 
     return this.olympicsCache$;
   }
@@ -61,7 +57,7 @@ export class OlympicService {
 
     console.error(
       `Erreur de serveur, code : ${error.status}, ` +
-        `message : ${error.message}`
+      `message : ${error.message}`
     );
 
     // Customize error messages based on the status code
