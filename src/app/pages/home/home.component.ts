@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Error message to display in case of an error
   public errorMessage: string | null = null;
 
-  constructor(private olympicService: OlympicService, private router: Router) { }
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
     // Check if an error message was passed through the router's state
@@ -153,7 +153,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 0);
 
     this.totalOlympics = olympics.reduce((sum, country) => {
-      return sum + country.participations.length;
+      return sum + country.participations.length / olympics.length;
     }, 0);
   }
 }
